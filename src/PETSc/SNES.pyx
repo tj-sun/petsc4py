@@ -676,6 +676,21 @@ cdef class SNES(Object):
         PetscINCREF(snes.obj)
         return snes
 
+    # --- NASM ---
+
+    def getNASMNumber(self):
+        cdef PetscInt cn
+        CHKERR( SNESNASMGetNumber(self.snes, &cn) )
+        return toInt(cn)
+
+    def getNASMSNES(self, n):
+        cdef PetscInt cn
+        cdef SNES snes = SNES()
+        cn = asInt(n)
+        CHKERR( SNESNASMGetSNES(self.snes, cn, &snes.snes) )
+        PetscINCREF(snes.obj)
+        return snes
+
     # --- application context ---
 
     property appctx:
