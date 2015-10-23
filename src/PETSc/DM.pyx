@@ -37,6 +37,10 @@ cdef class DM(Object):
         if viewer is not None: vwr = viewer.vwr
         CHKERR( DMView(self.dm, vwr) )
 
+    def load(self, Viewer viewer not None):
+        CHKERR( DMLoad(self.dm, viewer.vwr) )
+        return self
+
     def destroy(self):
         CHKERR( DMDestroy(&self.dm) )
         return self
@@ -167,6 +171,16 @@ cdef class DM(Object):
         CHKERR( DMGetCoordinatesLocal(self.dm, &c.vec) )
         PetscINCREF(c.obj)
         return c
+
+    #
+    def setUseNatural(self, useNatural=True):
+        cdef PetscBool flag = useNatural
+        CHKERR( DMSetUseNatural(self.dm, flag) )
+
+    def getUseNatural(self):
+        cdef PetscBool flag = PETSC_FALSE
+        CHKERR( DMGetUseNatural(self.dm, &flag) )
+        return <bint> flag
 
     #
 

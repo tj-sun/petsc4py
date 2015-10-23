@@ -26,6 +26,7 @@ cdef extern from * nogil:
     int DMClone(PetscDM,PetscDM*)
     int DMDestroy(PetscDM*)
     int DMView(PetscDM,PetscViewer)
+    int DMLoad(PetscDM,PetscViewer)
     int DMSetType(PetscDM,PetscDMType)
     int DMGetType(PetscDM,PetscDMType*)
     int DMGetDimension(PetscDM,PetscInt*)
@@ -79,6 +80,9 @@ cdef extern from * nogil:
 
     int DMShellSetGlobalVector(PetscDM,PetscVec)
     int DMShellSetLocalVector(PetscDM,PetscVec)
+
+    int DMSetUseNatural(PetscDM,PetscBool)
+    int DMGetUseNatural(PetscDM,PetscBool*)
 
 # --------------------------------------------------------------------
 
