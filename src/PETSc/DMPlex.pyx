@@ -615,3 +615,15 @@ cdef class DMPlex(DM):
         cdef PetscReal vol = 0, centroid[3], normal[3]
         CHKERR( DMPlexComputeCellGeometryFVM(self.dm, ccell, &vol, centroid, normal) )
         return (toReal(vol), array_r(dim, centroid), array_r(dim, normal))
+
+    def globalToNaturalBegin(self, Vec gvec not None, Vec nvec not None):
+        CHKERR( DMPlexGlobalToNaturalBegin(self.dm, gvec.vec, nvec.vec) )
+
+    def globalToNaturalEnd(self, Vec gvec not None, Vec nvec not None):
+        CHKERR( DMPlexGlobalToNaturalEnd(self.dm, gvec.vec, nvec.vec) )
+
+    def naturalToGlobalBegin(self, Vec gvec not None, Vec nvec not None):
+        CHKERR( DMPlexNaturalToGlobalBegin(self.dm, gvec.vec, nvec.vec) )
+
+    def naturalToGlobalEnd(self, Vec gvec not None, Vec nvec not None):
+        CHKERR( DMPlexNaturalToGlobalEnd(self.dm, gvec.vec, nvec.vec) )

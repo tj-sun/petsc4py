@@ -143,3 +143,8 @@ cdef extern from * nogil:
     int DMPlexCreateSection(PetscDM,PetscInt,PetscInt,const_PetscInt[],const_PetscInt[],PetscInt,const_PetscInt[],const_PetscIS[],const_PetscIS[],PetscIS,PetscSection*)
 
     int DMPlexComputeCellGeometryFVM(PetscDM,PetscInt,PetscReal*,PetscReal[],PetscReal[])
+
+    int DMPlexGlobalToNaturalBegin(PetscDM,PetscVec,PetscVec)
+    int DMPlexGlobalToNaturalEnd(PetscDM,PetscVec,PetscVec)
+    int DMPlexNaturalToGlobalBegin(PetscDM,PetscVec,PetscVec)
+    int DMPlexNaturalToGlobalEnd(PetscDM,PetscVec,PetscVec)
