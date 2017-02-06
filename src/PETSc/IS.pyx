@@ -340,17 +340,23 @@ cdef class IS(Object):
 # --------------------------------------------------------------------
 
 
-class GLMapType(object):
+class GLMapMode(object):
     MASK = PETSC_IS_GTOLM_MASK
     DROP = PETSC_IS_GTOLM_DROP
+
+
+class LGType(object):
+    BASIC = S_(ISLOCALTOGLOBALMAPPINGBASIC)
+    HASH  = S_(ISLOCALTOGLOBALMAPPINGHASH)
 
 
 # --------------------------------------------------------------------
 
 cdef class LGMap(Object):
 
-    MapType = GLMapType
+    MapMode = GLMapMode
 
+    Type = LGType
     #
 
     def __cinit__(self):
@@ -361,6 +367,14 @@ cdef class LGMap(Object):
         self.apply(indices, result)
 
     #
+
+    def setType(self, lg_type):
+        cdef PetscISLocalToGlobalMappingType cval = NULL
+        ilg_type = str2bytes(lg_type, &cval)
+        CHKERR( ISLocalToGlobalMappingSetType(self.lgm, cval) )
+
+    def setFromOptions(self):
+        CHKERR( ISLocalToGlobalMappingSetFromOptions(self.lgm) )
 
     def view(self, Viewer viewer=None):
         cdef PetscViewer cviewer = NULL
@@ -499,7 +513,7 @@ cdef class LGMap(Object):
         return result
 
     def applyInverse(self, indices, map_type=None):
-        cdef PetscGLMapType cmtype = PETSC_IS_GTOLM_MASK
+        cdef PetscGLMapMode cmtype = PETSC_IS_GTOLM_MASK
         if map_type is not None: cmtype = map_type
         cdef PetscInt n = 0, *idx = NULL
         indices = iarray_i(indices, &n, &idx)
@@ -513,7 +527,7 @@ cdef class LGMap(Object):
         return result
 
     def applyBlockInverse(self, indices, map_type=None):
-        cdef PetscGLMapType cmtype = PETSC_IS_GTOLM_MASK
+        cdef PetscGLMapMode cmtype = PETSC_IS_GTOLM_MASK
         if map_type is not None: cmtype = map_type
         cdef PetscInt n = 0, *idx = NULL
         indices = iarray_i(indices, &n, &idx)
@@ -554,6 +568,6 @@ cdef class LGMap(Object):
 # --------------------------------------------------------------------
 
 del ISType
-del GLMapType
-
+del GLMapMode
+del LGType
 # --------------------------------------------------------------------
