@@ -43,6 +43,7 @@ cdef extern from * nogil:
     PetscPCType PCBDDC
     PetscPCType PCKACZMARZ
     PetscPCType PCTELESCOPE
+    PetscPCType PCLMVM
     PetscPCType PCPATCH
 
     ctypedef enum PetscPCSide "PCSide":
