@@ -101,6 +101,7 @@ cdef extern from * nogil:
     #int DMPlexCreateNeighborCSR(PetscDM,PetscInt,PetscInt*,PetscInt**,PetscInt**)
     #int DMPlexCreatePartition(PetscDM,const_char[],PetscInt,PetscBool,PetscSection*,PetscIS*,PetscSection*,PetscIS*)
     #int DMPlexCreatePartitionClosure(PetscDM,PetscSection,PetscIS,PetscSection*,PetscIS*)
+    int DMPlexRebalanceSharedPoints(PetscDM dm)
     int DMPlexDistribute(PetscDM,PetscInt,PetscSF*,PetscDM*)
     int DMPlexDistributeOverlap(PetscDM,PetscInt,PetscSF*,PetscDM*)
     int DMPlexSetPartitioner(PetscDM,PetscPartitioner)
