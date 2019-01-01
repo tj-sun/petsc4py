@@ -482,8 +482,8 @@ cdef class DMPlex(DM):
         PetscINCREF(part.obj)
         return part
 
-    def rebalanceSharedPoints(self):
-        CHKERR( DMPlexRebalanceSharedPoints(self.dm) )
+    def rebalanceSharedPoints(self, useInitialGuess=True):
+        CHKERR( DMPlexRebalanceSharedPoints(self.dm, useInitialGuess) )
 
     def distribute(self, overlap=0):
         cdef PetscDM dmParallel = NULL
